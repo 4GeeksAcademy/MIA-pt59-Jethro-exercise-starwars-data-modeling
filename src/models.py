@@ -46,6 +46,23 @@ class Starship(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+
+
+class Characters(Base):
+    __tablename__ = 'characters'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    id_characters = Column(Integer, primary_key=True)
+    characters_name = Column(String(250), nullable= False)
+    characters_height = Column(Integer, nullable= False)
+    characters_hair_color = Column(String(20), nullable=False)
+    characters_eye = Column(String(20), nullable=False)
+    characters_birth_Year = Column(String(30), nullable= False)    
+    id_starship= Column(Integer, ForeignKey('starship.id'))
+    id_planet= Column(Integer, ForeignKey('planet.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
     def to_dict(self):
         return {}
 
