@@ -17,8 +17,26 @@ class User(Base):
     email= Column(String(20), nullable=False)
     tel = Column(String(10), nullable=False)
     
+class Favorites(Base):
+    __tablename__ = 'favorites'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    favorite_id = Column(Integer, primary_key=True)
+    id_planet = Column(Integer, ForeignKey('planet.id'))
+    planet = relationship("Planet")
+    id_characters = Column(Integer, ForeignKey('characters.id'))
+    characters = relationship("Characters")
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+    id_starship = Column(Integer, ForeignKey('starship.id'))
+    starship = relationship("Starship")
+    
+
+    
 
 
+    user = relationship(User)
+    
 class Planet(Base):
     __tablename__ = 'planet'
     # Here we define columns for the table address.
@@ -29,8 +47,8 @@ class Planet(Base):
     planet_climate = Column(Integer, nullable=False)
     planet_population = Column(Integer, nullable=False)
     planet_terrain = Column(String(250), nullable= False)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    favorites_id = Column(Integer, ForeignKey('favorites.id'))
+    favorites = relationship(Favorites)
 
 
 class Starship(Base):
@@ -43,8 +61,9 @@ class Starship(Base):
     starship_length = Column(Integer, nullable=False)
     starship_CostInCredit = Column(Integer, nullable=False)
     starship_manufacturer = Column(String(250), nullable= False)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    favorites_id = Column(Integer, ForeignKey('favorites.id'))
+    favorites = relationship(Favorites)
+
 
 
 
@@ -60,8 +79,9 @@ class Characters(Base):
     characters_birth_Year = Column(String(30), nullable= False)    
     id_starship= Column(Integer, ForeignKey('starship.id'))
     id_planet= Column(Integer, ForeignKey('planet.id'))
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    favorites_id = Column(Integer, ForeignKey('favorites.id'))
+    favorites = relationship(Favorites)
+
 
     def to_dict(self):
         return {}
